@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="kr">
-	<head>
+<head>
 	<meta charset="UTF-8">
 	
 	
 	  <title>Addressbook</title>
-	  <link rel="shortcut icon" href="https://lh3.googleusercontent.com/sHMKgiee-dwZHonhBF-7b4e9y7eXXk1_yxIeVoxJ3jj0IpAPil66SeI6qTz88iuK_Q=w300" />
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 </head>
+	
 <body>
 <input type="checkbox" id="menu_state" checked>
 <nav>
@@ -48,7 +48,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="/new">
+			<a href="javascript:void(0)">
 				<i class="fa fa-plus"></i>
 			</a>
 		</li>
@@ -58,29 +58,24 @@
 	<header></header>
 	<section>
 		<h1>Proin sodales velit vel nisi bibendum tempor</h1>
-		<table>
-         <thead>
-            <tr>
-               ADDRESSBOOK LIST
-               <th>Num</th>
-               <th>Name</th>
-               <th>Phone</th>
-               <th>E-mail</th>
-            </tr>
-         </thead>
-         
-         <tbody>
-            {%- for i in ADDRESSBOOK %}
-			<tr>
-			<td>{{ i.id }}</td>
-			<td>{{ i.name }}</td>
-			<td>{{ i.number }}</td>
-			<td>{{ i.email }}</td>
-			</tr>
-			{%- endfor %}
-         </tbody>
-      </table>
-
+		<p>연락처 추가하기</p>
+		<form action='{{request.path}}' method='POST'>
+			<div>
+			<label for='name'>Name:</label>
+			<input type='text' id='name' name='name'><br>
+			</div>
+			<div>
+			<label for="number">Phone:</label>
+			<input type="text" id="number" name="number"><br>
+			</div>
+			<div>
+			<label for="email">E-mail:</label>
+			<input type="email" id="email" name="email">
+			</div>
+			<div>
+				<input type="submit" value="추가">
+				</div>
+		</form>
 	</section>
 </main>
 </body>
