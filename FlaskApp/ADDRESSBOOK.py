@@ -21,7 +21,7 @@ class PERSON(db.Model):
 
 @app.route("/")
 def main():
-	return render_template('index.html', ADDRESSBOOK=PERSON.query.all())
+	return render_template('main.html', ADDRESSBOOK=PERSON.query.all(), contact_count=PERSON.query.count())
 
 @app.route("/new", methods=['GET', 'POST'])
 def new():
@@ -33,7 +33,19 @@ def new():
 	 		db.session.add(NEW)
 	 		db.session.commit()
 	 		return redirect("/")
-	 return render_template('plus.html')
+	 return render_template('plus.html', contact_count=PERSON.query.count())
+
+@app.route("/favorite")
+def favorite():
+	return render_template('favorite.html',contact_count=PERSON.query.count())
+
+@app.route("/trash")
+def delete():
+	return render_template('trash.html',contact_count=PERSON.query.count())
+
+@app.route("/recent")
+def recent():
+	return render_template('recent.html',contact_count=PERSON.query.count())	
 
 if __name__ == "__main__" :
 	db.create_all()

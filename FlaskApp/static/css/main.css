@@ -136,6 +136,7 @@ main header {
   top: 0;
   left: 0;
   right: 0;
+  width: 0;
   height: 400px;
   background: url("http://www.lgblog.co.kr/wp-content/uploads/2016/07/books-education-school-literature-48126.jpeg");
   background-size: cover;
