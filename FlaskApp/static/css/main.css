@@ -196,13 +196,21 @@ table.contact_list {
     line-height: 1.5;
     border-top: 1px solid #ccc;
     border-left: 3px solid #369;
+<<<<<<< HEAD
   margin : 20px 10px;
+=======
+  margin : 30px 30px;
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
 }
 
 
 table.contact_list th {
     width: 200px;
     padding: 10px;
+<<<<<<< HEAD
+=======
+    margin-left: 30px
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
     font-weight: bold;
     vertical-align: top;
     color: #153d73;
@@ -226,6 +234,10 @@ main {
   left: 50px;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
 * {
   margin: 0;
   padding: 0;
@@ -305,4 +317,27 @@ a.btn-layerClose:hover {
   border: 1px solid #091940;
   background-color: #1f326a;
   color: #fff;
+<<<<<<< HEAD
 }
+=======
+}
+
+.search_window {
+  display: inline-block;
+  width: 366px; height: 34px;
+  border: 2px solid #153d73;
+  background: white;
+  margin-left: 30px;
+  margin-top :30px;
+  padding: 0 20px 5px;
+}
+.input_text {
+  width: 348px; height: 21px;
+  margin: 6px 0 0 3px;
+  border: 0;
+  line-height: 21px;
+  font-weight: bold;
+  font-size: 16px;
+  outline: none;
+}
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6

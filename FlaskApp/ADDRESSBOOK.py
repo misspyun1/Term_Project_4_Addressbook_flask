@@ -45,7 +45,7 @@ def delete(name):
 	deleted.delete()
 	db.session.commit()
 	return redirect("/")
-
+	
 @app.route("/trash")
 def trash():
 	return render_template('trash.html',contact_count=PERSON.query.count())
