@@ -1,9 +1,10 @@
-from flask import Flask, render_template, redirect,request
+from flask import Flask, render_template, redirect,request, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///addressbook.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SECRET_KEY'] = "random string"
 
 db=SQLAlchemy(app)
 
@@ -18,10 +19,9 @@ class PERSON(db.Model):
       self.number=number
       self.email=email
 
-
 @app.route("/")
 def main():
-	return render_template('main.html', ADDRESSBOOK=PERSON.query.all(), contact_count=PERSON.query.count())
+	return render_template('main.html', ADDRESSBOOK=PERSON.query.order_by("name").all(), contact_count=PERSON.query.count())
 
 @app.route("/new", methods=['GET', 'POST'])
 def new():
@@ -39,13 +39,20 @@ def new():
 def favorite():
 	return render_template('favorite.html',contact_count=PERSON.query.count())
 
+@app.route("/delete/<name>")
+def delete(name):
+	deleted=PERSON.query.filter_by(name=name)
+	deleted.delete()
+	db.session.commit()
+	return redirect("/")
+	
 @app.route("/trash")
-def delete():
+def trash():
 	return render_template('trash.html',contact_count=PERSON.query.count())
 
 @app.route("/recent")
 def recent():
-	return render_template('recent.html',contact_count=PERSON.query.count())	
+	return render_template('recent.html',contact_count=PERSON.query.count())
 
 if __name__ == "__main__" :
 	db.create_all()
