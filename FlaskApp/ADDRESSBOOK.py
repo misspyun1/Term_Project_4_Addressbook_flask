@@ -13,15 +13,19 @@ class PERSON(db.Model):
    name=db.Column(db.String(50), nullable=False, default='')
    number=db.Column(db.String(50), nullable=False, default='')
    email=db.Column(db.String(50), nullable=False, default='')
+   favorite=db.Column(db.String(10), default="♡")
+   deleted=db.Column(db.Boolean, default=False)
 
    def __init__(self, name, number, email):
       self.name=name
       self.number=number
       self.email=email
+      self.favorite="♡"
+      self.deleted=False
 
 @app.route("/")
 def main():
-	return render_template('main.html', ADDRESSBOOK=PERSON.query.order_by("name").all(), contact_count=PERSON.query.count())
+	return render_template('main.html', ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 @app.route("/new", methods=['GET', 'POST'])
 def new():
@@ -36,29 +40,66 @@ def new():
 	 return render_template('plus.html', contact_count=PERSON.query.count())
 
 @app.route("/favorite")
-def favorite():
-	return render_template('favorite.html',contact_count=PERSON.query.count())
+def show_favorite():
+	return render_template('favorite.html',contact_count=PERSON.query.count(),FAVORITE=PERSON.query.filter_by(favorite='♥').order_by("name"),trashcount=PERSON.query.filter_by(deleted=True).count())
 
-@app.route("/delete/<name>")
-def delete(name):
-	deleted=PERSON.query.filter_by(name=name)
-	deleted.delete()
+@app.route("/abdelete/<name>")
+def abdelete(name):
+	abdeleted=PERSON.query.filter_by(name=name)
+	abdeleted.delete()
 	db.session.commit()
 	return redirect("/")
+
+@app.route("/trash")
+def trash():
+	return render_template('trash.html',contact_count=PERSON.query.count(),trash=PERSON.query.filter_by(deleted=True),trashcount=PERSON.query.filter_by(deleted=True).count())
+
+@app.route("/restore/<id>")
+def restore(id):
+	deleted=PERSON.query.get(id)
+	deleted.deleted=False
+	db.session.commit()
+	return redirect("/")
+
+@app.route("/delete/<id>")
+def delete(id):
+	deleted=PERSON.query.get(id)
+	if deleted.deleted==True:
+		deleted.deleted=False
+	else :
+		deleted.deleted=True
+	db.session.commit()
+	return redirect("/")
+
+@app.route("/favorite/<id>")
+def favorite(id):
+	favorite=PERSON.query.get(id)
+	if favorite.favorite=="♥":
+		favorite.favorite="♡"
+	else :
+		favorite.favorite="♥"
+	db.session.commit()
+	return redirect("/")
+
 
 @app.route("/search", methods=['POST'])
 def search():
 	string=request.form['string']
 	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string).order_by("name").all(),
-	numbersearch=PERSON.query.filter_by(number=string).order_by("name").all(),contact_count=PERSON.query.count())
+	numbersearch=PERSON.query.filter_by(number=string).order_by("name").all(),contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
-@app.route("/trash")
-def trash():
-	return render_template('trash.html',contact_count=PERSON.query.count())
+@app.route("/edit/<id>", methods=['POST'])
+def edit(id):
+   edited=PERSON.query.get(id)
+   edited.name=request.form['name']
+   edited.number=request.form['number']
+   edited.email=request.form['email']
+   db.session.commit()
+   return redirect("/")
 
 @app.route("/recent")
 def recent():
-	return render_template('recent.html',contact_count=PERSON.query.count())
+	return render_template('recent.html',contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 if __name__ == "__main__" :
 	db.create_all()

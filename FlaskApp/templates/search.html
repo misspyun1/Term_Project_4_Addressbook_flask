@@ -38,22 +38,7 @@ function layer_open(el){
                            // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
-}            
-function toggle_object(el)
-{   
-    var obj = document.getElementById('favoriticon'+el);  
-    if(!obj) return ;   
-  
-    if(obj.className=="fa fa-heart-o")
-    {   
-        obj.className="fa fa-heart"; 
-        
-    } 
-    else 
-    {   
-        obj.className="fa fa-heart-o";
-    }
-}
+}   
 </script>
 
 <style>
@@ -87,7 +72,7 @@ a{margin-left:10px;}
             <span>Recent</span>
          </a>
       </li>
-      <li data-content="2" class="unread">
+      <li data-content={{trashcount}} class="unread">
          <a href="/trash">
             <i class="fa fa-trash"></i>
             <span>Trash</span>
