@@ -124,6 +124,18 @@ nav ul li a span {
   line-height: 50px;
   transition: opacity 0.1s ease-in-out;
 }
+nav ul li a span form {
+  padding-left: 25px;
+  opacity: 0;
+  line-height: 50px;
+  transition: opacity 0.1s ease-in-out;
+}
+nav ul li a span input {
+  padding-left: 25px;
+  opacity: 0;
+  line-height: 50px;
+  transition: opacity 0.1s ease-in-out;
+}
 main {
   position: absolute;
   transition: all 0.15s ease-in-out;
@@ -184,14 +196,21 @@ table.contact_list {
     line-height: 1.5;
     border-top: 1px solid #ccc;
     border-left: 3px solid #369;
+<<<<<<< HEAD
+  margin : 20px 10px;
+=======
   margin : 30px 30px;
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
 }
 
 
 table.contact_list th {
     width: 200px;
     padding: 10px;
+<<<<<<< HEAD
+=======
     margin-left: 30px
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
     font-weight: bold;
     vertical-align: top;
     color: #153d73;
@@ -215,7 +234,10 @@ main {
   left: 50px;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
 * {
   margin: 0;
   padding: 0;
@@ -295,6 +317,9 @@ a.btn-layerClose:hover {
   border: 1px solid #091940;
   background-color: #1f326a;
   color: #fff;
+<<<<<<< HEAD
+}
+=======
 }
 
 .search_window {
@@ -315,3 +340,4 @@ a.btn-layerClose:hover {
   font-size: 16px;
   outline: none;
 }
+>>>>>>> ad3acb202fc151658417afffd5938444e95227f6
