@@ -45,7 +45,13 @@ def delete(name):
 	deleted.delete()
 	db.session.commit()
 	return redirect("/")
-	
+
+@app.route("/search", methods=['POST'])
+def search():
+	string=request.form['string']
+	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string).order_by("name").all(),
+	numbersearch=PERSON.query.filter_by(number=string).order_by("name").all(),contact_count=PERSON.query.count())
+
 @app.route("/trash")
 def trash():
 	return render_template('trash.html',contact_count=PERSON.query.count())

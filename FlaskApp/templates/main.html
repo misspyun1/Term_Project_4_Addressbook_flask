@@ -38,11 +38,9 @@ function layer_open(el){
                            // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
-} 
-
+}            
 function toggle_object(el)
 {   
-
     var obj = document.getElementById('favoriticon'+el);  
     if(!obj) return ;   
   
@@ -55,9 +53,7 @@ function toggle_object(el)
     {   
         obj.className="fa fa-heart-o";
     }
-
 }
-
 </script>
 
 <style>
@@ -66,6 +62,9 @@ a{margin-left:10px;}
 
 </head>
 <body>
+
+
+
 <input type="checkbox" id="menu_state" checked>
 <nav>
    <label for="menu_state"><i class="fa"></i></label>
@@ -100,29 +99,27 @@ a{margin-left:10px;}
             <span>Plus</span>
          </a>
       </li>
-      <li>
-      <a>
-      <i class="fa fa-search"></i>
-         <span>
-         <input type='text' id="search" name='search' placeholder="search" style="background:#383e49" style="color: white">
-         </span>
-      </a>
-      </li>
+
    </ul>
 </nav>
 <main>
    <header></header>
 
    <div>
-      <table class="contact_list">
-      <thead>
-            <tr>
-               ADDRESSBOOK LIST
-            </tr>
-         </thead>
-         <tbody>
+      <span>
+      <form action="/search" method="POST">
+         <input type='text' name='string' class='input_text' placeholder='search'>
+         <a type="submit" class="fa fa-search" style = "color:#153d73; font-size: 20px"></a>
+         </form>
+</span>
+        <table class="contact_list">
+
+        <thead> </thead>
+
+        <tbody>
           <tr>
-              
+              <th scop="row" style="background: #f5f5f5">&nbsp;&nbsp;<i class="fa fa-heart" style="color:#ff0033"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이름</th>
+              <td style="background:#f5f5f5;font-weight: bold">전화번호</td> </tr>
               {%- for i in ADDRESSBOOK %}
               <th scope="row">
               <a href="#" onclick="toggle_object('{{i.name}}'); return false;" class= "fa fa-heart-o" style = "color : #ff0033" id = "favoriticon{{i.name}}" ></a>
