@@ -16,39 +16,40 @@
 <body>
 <input type="checkbox" id="menu_state" checked>
 <nav>
-	<label for="menu_state"><i class="fa"></i></label>
-	<ul>
-		<li data-content={{contact_count}} class="unread">
-			<a href="/">
-				<i class="fa fa-inbox"></i>
-				<span>Contacts</span>
-			</a>
-		</li>
-		<li>
-			<a href="/favorite">
-				<i class="fa fa-heart"></i>
-				<span>Favorites</span>
-			</a>
-		</li>
-		<li>
-			<a href="/recent">
-				<i class="fa fa-paper-plane"></i>
-				<span>Recent</span>
-			</a>
-		</li>
-		<li data-content={{trashcount}} class="unread">
-			<a href="/trash">
-				<i class="fa fa-trash"></i>
-				<span>Trash</span>
-			</a>
-		</li>
-		<li>
-			<a href="/new">
-				<i class="fa fa-plus"></i>
-				<span>Plus</span>
-			</a>
-		</li>
-	</ul>
+   <label for="menu_state"><i class="fa"></i></label>
+   <ul>
+      <li>
+         <a href="/">
+            <i class="fa fa-inbox"></i>
+            <span>Contacts ({{contact_count}})</span>
+         </a>
+      </li>
+      <li>
+         <a href="/favorite">
+            <i class="fa fa-heart"></i>
+            <span>Favorites</span>
+         </a>
+      </li>
+      <li data-content="3" class="unread">
+         <a href="/recent">
+            <i class="fa fa-paper-plane"></i>
+            <span>Recent</span>
+         </a>
+      </li>
+      <li data-content={{trashcount}} class="unread">
+         <a href="/trash">
+            <i class="fa fa-trash"></i>
+            <span>Trash</span>
+         </a>
+      </li>
+      <li>
+         <a href="/new">
+            <i class="fa fa-plus"></i>
+            <span>Plus</span>
+         </a>
+      </li>
+
+   </ul>
 </nav>
 <main>
 	<header></header>

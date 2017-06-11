@@ -27,7 +27,7 @@ function layer_open(el){
       // 화면의 중앙에 레이어를 띄운다.
         if ($elHeight < docHeight || $elWidth < docWidth) {
             $el.css({
-                marginTop: -$elHeight /4,
+                marginTop: -$elHeight/4,
                 marginLeft: -$elWidth/2
             })
         } else {
@@ -46,7 +46,21 @@ function layer_open(el){
 
 }         
 
-
+function toggle_object(el)
+{   
+    var obj = document.getElementById('favoriticon'+el);  
+    if(!obj) return ;   
+  
+    if(obj.className=="fa fa-envelope-o")
+    {   
+        obj.className="fa fa-envelope-open-o"; 
+        
+    } 
+    else 
+    {   
+        obj.className="fa fa-envelope-o";
+    }
+}
 </script>
 
 <style>
@@ -61,10 +75,10 @@ a{margin-left:10px;}
 <nav>
    <label for="menu_state"><i class="fa"></i></label>
    <ul>
-      <li data-content={{contact_count}} class="unread">
+      <li>
          <a href="/">
             <i class="fa fa-inbox"></i>
-            <span>Contacts</span>
+            <span>Contacts ({{contact_count}})</span>
          </a>
       </li>
       <li>
@@ -73,7 +87,7 @@ a{margin-left:10px;}
             <span>Favorites</span>
          </a>
       </li>
-      <li>
+      <li data-content="3" class="unread">
          <a href="/recent">
             <i class="fa fa-paper-plane"></i>
             <span>Recent</span>
@@ -100,7 +114,7 @@ a{margin-left:10px;}
    <div>
 
       <span>
-      <form action="/search" method="POST">
+      <form class="search-bar" action="/search" method="POST">
          <input type='text' name='string' class='input_text' placeholder='search'>
          <a type="submit" class="fa fa-search" style = "color:#153d73; font-size: 20px"></a>
          </form>
@@ -112,45 +126,69 @@ a{margin-left:10px;}
 
         <tbody>
           <tr>
-              <th scop="row" style="background: #f5f5f5">수발신</th>
-              <td style="background:#f5f5f5;font-weight: bold">종류</td>
-              <td style="background:#f5f5f5;font-weight: bold">이름</td>
-              <td style="background:#f5f5f5;font-weight: bold">번호</td>
-              <td style="background:#f5f5f5;font-weight: bold">내용</td> </tr>
-			<tr>
-              <th scope="row">→</th>
-              <td>message</td>
-              <td>강지우</td>
-              <td>01024672950</td>
-              <td>"Hello"</td>
+
+              <th scope="row">
+              <a href="#" onclick="toggle_object('mail1'); return false;" class= "fa fa-envelope-o" style = "color : #ff0033" id = "favoriticonmail1" ></a>
+              <a href = "#mail1" class="btn-example" onclick="layer_open('mail1'); return false;" > 유인경</a>
+              <div id="mail1" class="pop-layer" >
+                   <div class="pop-container">
+                         <div class="pop-conts">보낸 메일<br><br>
+                               <!--content //-->
+                            <p class = "ctxt mb20">학생<br>과제는 다 했나?<br>
+                              </p>
+
+                               <div class="btn-r">
+                                   <a href="/delete/mail1">Delete</a>  
+                                   <a href="#" class="btn-layerClose">Close</a>
+                               </div>
+                               <!--// content-->
+                           </div>
+                       </div>
+                </div>
+              </th>
+              <td>학생</td>
           </tr>
-          <tr>
-              <th scope="row">←</th>
-              <td>call</td>
-              <td>편규리</td>
-              <td>01012341234</td>
-              <td>"10분 36초"</td>
+             <th scope="row">
+              <a href="#" onclick="toggle_object('mail2'); return false;" class= "fa fa-envelope-o" style = "color : #ff0033" id = "favoriticonmail2" ></a>
+              <a href = "#mail2" class="btn-example" onclick="layer_open('mail2'); return false;" > 김준수</a>
+              <div id="mail2" class="pop-layer" >
+                   <div class="pop-container">
+                         <div class="pop-conts">보낸 메일<br><br>
+                               <!--content //-->
+                            <p class = "ctxt mb20">지우야<br>콘서트 올래?<br>
+                              </p>
+
+                               <div class="btn-r">
+                                   <a href="/delete/mail2">Delete</a>  
+                                   <a href="#" class="btn-layerClose">Close</a>
+                               </div>
+                               <!--// content-->
+                           </div>
+                       </div>
+                </div>
+              </th>
+              <td>지우야</td>
           </tr>
-          <tr>
-              <th scope="row">←</th>
-              <td>message</td>
-              <td>고민희</td>
-              <td>01098762525</td>
-              <td>"Hello"</td>
-          </tr>
-          <tr>
-              <th scope="row">→</th>
-              <td>message</td>
-              <td>유지호</td>
-              <td>01098762525</td>
-              <td>"Hello"</td>
-          </tr>
-          <tr>
-              <th scope="row">←</th>
-              <td>call</td>
-              <td>김지영</td>
-              <td>01012342763</td>
-              <td>"4분 5초"</td>
+             <th scope="row">
+              <a href="#" onclick="toggle_object('mail3'); return false;" class= "fa fa-envelope-open-o" style = "color : #ff0033" id = "favoriticonmail3" ></a>
+              <a href = "#mail3" class="btn-example" onclick="layer_open('mail3'); return false;" > 노미나</a>
+              <div id="mail3" class="pop-layer" >
+                   <div class="pop-container">
+                         <div class="pop-conts">보낸 메일<br><br>
+                               <!--content //-->
+                            <p class = "ctxt mb20">공지사항<br>오늘휴강입니다<br>
+                              </p>
+
+                               <div class="btn-r">
+                                   <a href="/delete/mail3">Delete</a>  
+                                   <a href="#" class="btn-layerClose">Close</a>
+                               </div>
+                               <!--// content-->
+                           </div>
+                       </div>
+                </div>
+              </th>
+              <td>공지사항</td>
           </tr>
        </tbody>
       </table>

@@ -25,7 +25,7 @@ class PERSON(db.Model):
 
 @app.route("/")
 def main():
-	return render_template('main.html', ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('main.html', ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 @app.route("/new", methods=['GET', 'POST'])
 def new():
@@ -41,7 +41,7 @@ def new():
 
 @app.route("/favorite")
 def show_favorite():
-	return render_template('favorite.html',contact_count=PERSON.query.count(),FAVORITE=PERSON.query.filter_by(favorite='♥').order_by("name"),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('favorite.html',contact_count=PERSON.query.filter_by(deleted=False).count(),FAVORITE=PERSON.query.filter_by(favorite='♥').order_by("name"),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 @app.route("/abdelete/<name>")
 def abdelete(name):
@@ -52,7 +52,7 @@ def abdelete(name):
 
 @app.route("/trash")
 def trash():
-	return render_template('trash.html',contact_count=PERSON.query.count(),trash=PERSON.query.filter_by(deleted=True),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('trash.html',contact_count=PERSON.query.filter_by(deleted=False).count(),trash=PERSON.query.filter_by(deleted=True),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 @app.route("/restore/<id>")
 def restore(id):
@@ -86,7 +86,14 @@ def favorite(id):
 def search():
 	string=request.form['string']
 	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string).order_by("name").all(),
-	numbersearch=PERSON.query.filter_by(number=string).order_by("name").all(),contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	numbersearch=PERSON.query.filter_by(number=string).order_by("name").all(),contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+
+@app.route("/search/favorite", methods=['POST'])
+def search_favorite():
+	string=request.form['string']
+	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string, favorite=True).order_by("name").all(),
+	numbersearch=PERSON.query.filter_by(number=string, favorite=True).order_by("name").all(),contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+
 
 @app.route("/edit/<id>", methods=['POST'])
 def edit(id):
@@ -99,7 +106,7 @@ def edit(id):
 
 @app.route("/recent")
 def recent():
-	return render_template('recent.html',contact_count=PERSON.query.count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('recent.html',contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 if __name__ == "__main__" :
 	db.create_all()

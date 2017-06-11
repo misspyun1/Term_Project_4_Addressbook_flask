@@ -54,10 +54,10 @@ a{margin-left:10px;}
 <nav>
    <label for="menu_state"><i class="fa"></i></label>
    <ul>
-      <li data-content={{contact_count}} class="unread">
+      <li>
          <a href="/">
             <i class="fa fa-inbox"></i>
-            <span>Contacts</span>
+            <span>Contacts ({{contact_count}})</span>
          </a>
       </li>
       <li>
@@ -66,7 +66,7 @@ a{margin-left:10px;}
             <span>Favorites</span>
          </a>
       </li>
-      <li>
+      <li data-content="3" class="unread">
          <a href="/recent">
             <i class="fa fa-paper-plane"></i>
             <span>Recent</span>
@@ -92,7 +92,7 @@ a{margin-left:10px;}
 
    <div>
    <span>
-      <form action="/search" method="POST">
+      <form class="search-bar" action="/search" method="POST">
          <input type='text' name='string' class='input_text' placeholder='search'>
          <a type="submit" image="fa fa-search" style = "color:#153d73; font-size: 20px"></a>
          </form>
@@ -100,7 +100,7 @@ a{margin-left:10px;}
 
         <table class="contact_list">
 
-        <thead> <br>SEARCH for name<br></thead>
+        <thead ><p style="font-weight: bold; font-size: 17px; margin-left: 30px; margin-top: 20px">이름으로 찾기</p></thead>
 
         <tbody>
           <tr>
@@ -137,7 +137,7 @@ a{margin-left:10px;}
 
       <table class="contact_list">
 
-        <thead> SEARCH for number</thead>
+        <thead ><p style="font-weight: bold; font-size: 17px; margin-left: 30px">전화번호로 찾기</p></thead>
 
         <tbody>
           <tr>

@@ -163,6 +163,15 @@ main section h1 {
   font-weight: lighter;
 }
 
+form.edit-popup {
+  margin: 0 auto;
+  width: 350px;
+
+  padding:1em;
+  border:1px solid #CCC;
+  border-radius: 1em;
+}
+
 label{
   display: inline-block;
   width: 90px;
@@ -289,7 +298,8 @@ a.btn-layerClose:hover {
   color: #fff;
 }
 
-main div form {
+
+div form.search-bar {
   display: inline-block;
   width: 380px; height: 34px;
   border: 2px solid #153d73;
@@ -298,8 +308,8 @@ main div form {
   margin-top :30px;
   padding: 0 20px 5px;
 }
-main div form input {
-  width: 348px; height: 21px;
+div form input{
+  width: 300px; height: 21px;
   margin: 6px 0 0 3px;
   border: 0;
   line-height: 21px;

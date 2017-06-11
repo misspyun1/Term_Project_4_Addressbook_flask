@@ -61,10 +61,10 @@ a{margin-left:10px;}
 <nav>
    <label for="menu_state"><i class="fa"></i></label>
    <ul>
-      <li data-content={{contact_count}} class="unread">
+      <li>
          <a href="/">
             <i class="fa fa-inbox"></i>
-            <span>Contacts</span>
+            <span>Contacts ({{contact_count}})</span>
          </a>
       </li>
       <li>
@@ -73,7 +73,7 @@ a{margin-left:10px;}
             <span>Favorites</span>
          </a>
       </li>
-      <li>
+      <li data-content="3" class="unread">
          <a href="/recent">
             <i class="fa fa-paper-plane"></i>
             <span>Recent</span>
@@ -99,12 +99,13 @@ a{margin-left:10px;}
 
    <div>
 
-      <span>
-      <form action="/search" method="POST">
+       <span>
+      <form class="search-bar" action="/search" method="POST">
          <input type='text' name='string' class='input_text' placeholder='search'>
          <a type="submit" class="fa fa-search" style = "color:#153d73; font-size: 20px"></a>
          </form>
 </span>
+
 
         <table class="contact_list">
 
@@ -134,13 +135,13 @@ a{margin-left:10px;}
                                         <div class="pop-container">
                                               <div class="pop-conts" >연락처 수정<br><br>
                                                     <!--content //-->
-                                                 <form action="/edit/{{i.id}}" method="POST">
+                                                 <form class="edit-popup" action="/edit/{{i.id}}" method="POST">
                                                      <input type="text" name="name" value="{{ i.name }}" style="margin-right: 30px; margin-top: 30px"><br>
                                                      <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
                                                      <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
                                                      <div class="btn-r">
-                                                     <input type="submit" value="save">  
-                                                       <a class="btn-layerClose">Close</a>
+                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <a class="btn-layerClose">Close</a>
                                                      </div>
                                                  </form>>
 
