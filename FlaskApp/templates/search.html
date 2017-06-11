@@ -90,6 +90,17 @@ a{margin-left:10px;}
 <main>
    <header></header>
 
+    <style>
+body
+{
+background: url(https://static.pexels.com/photos/255527/pexels-photo-255527.jpeg)
+ no-repeat center center fixed; 
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}</style>
+
    <div>
    <span>
       <form class="search-bar" action="/search" method="POST">
@@ -119,7 +130,26 @@ a{margin-left:10px;}
 
                                <div class="btn-r">
                                    <a href="/delete/{{i.name}}">Delete</a>  
-                                   <a href="#" class="btn-layerClose">Edit</a>
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">Edit</a>
+                                         <div id="{{i.name}}edit" class="pop-layer" >
+                                        <div class="pop-container">
+                                              <div class="pop-conts" >연락처 수정<br><br>
+                                                    <!--content //-->
+                                                 <form class="edit-popup" action="/edit/{{i.id}}" method="POST">
+                                                     <input type="text" name="name" value="{{ i.name }}" style="margin-right: 30px; margin-top: 30px"><br>
+                                                     <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
+                                                     <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
+                                                     <div class="btn-r">
+                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <a class="btn-layerClose">Close</a>
+                                                     </div>
+                                                 </form>>
+
+
+                                                    <!--// content-->
+                                                </div>
+                                            </div>
+                                      </div>
                                    <a href="#" class="btn-layerClose">Close</a>
                                </div>
                                <!--// content-->
@@ -156,7 +186,26 @@ a{margin-left:10px;}
 
                                <div class="btn-r">
                                    <a href="/delete/{{i.name}}">Delete</a>  
-                                   <a href="#" class="btn-layerClose">Edit</a>
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">Edit</a>
+                                         <div id="{{i.name}}edit" class="pop-layer" >
+                                        <div class="pop-container">
+                                              <div class="pop-conts" >연락처 수정<br><br>
+                                                    <!--content //-->
+                                                 <form class="edit-popup" action="/edit/{{i.id}}" method="POST">
+                                                     <input type="text" name="name" value="{{ i.name }}" style="margin-right: 30px; margin-top: 30px"><br>
+                                                     <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
+                                                     <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
+                                                     <div class="btn-r">
+                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <a class="btn-layerClose">Close</a>
+                                                     </div>
+                                                 </form>>
+
+
+                                                    <!--// content-->
+                                                </div>
+                                            </div>
+                                      </div>
                                    <a href="#" class="btn-layerClose">Close</a>
                                </div>
                                <!--// content-->

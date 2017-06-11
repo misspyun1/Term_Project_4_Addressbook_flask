@@ -37,7 +37,7 @@ def new():
 	 		db.session.add(NEW)
 	 		db.session.commit()
 	 		return redirect("/")
-	 return render_template('plus.html', contact_count=PERSON.query.count())
+	 return render_template('plus.html', contact_count=PERSON.query.count(), trashcount=PERSON.query.filter_by(deleted=True).count())
 
 @app.route("/favorite")
 def show_favorite():
