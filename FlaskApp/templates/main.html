@@ -38,25 +38,14 @@ function layer_open(el){
                            // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
-} 
+        $el.find('a.btn-layerEdit').click(function(){
+           layer_open(el+'edit');
+                           
+            return false;
+        });
 
-function toggle_object(el)
-{   
+}         
 
-    var obj = document.getElementById('favoriticon'+el);  
-    if(!obj) return ;   
-  
-    if(obj.className=="fa fa-heart-o")
-    {   
-        obj.className="fa fa-heart"; 
-        
-    } 
-    else 
-    {   
-        obj.className="fa fa-heart-o";
-    }
-
-}
 
 </script>
 
@@ -65,15 +54,17 @@ a{margin-left:10px;}
 </style>
 
 </head>
+
 <body>
+
 <input type="checkbox" id="menu_state" checked>
 <nav>
    <label for="menu_state"><i class="fa"></i></label>
    <ul>
-      <li data-content={{contact_count}} class="unread">
+      <li>
          <a href="/">
             <i class="fa fa-inbox"></i>
-            <span>Contacts</span>
+            <span>Contacts ({{contact_count}})</span>
          </a>
       </li>
       <li>
@@ -82,13 +73,13 @@ a{margin-left:10px;}
             <span>Favorites</span>
          </a>
       </li>
-      <li>
+      <li data-content="3" class="unread">
          <a href="/recent">
             <i class="fa fa-paper-plane"></i>
             <span>Recent</span>
          </a>
       </li>
-      <li data-content="2" class="unread">
+      <li data-content={{trashcount}} class="unread">
          <a href="/trash">
             <i class="fa fa-trash"></i>
             <span>Trash</span>
@@ -100,32 +91,46 @@ a{margin-left:10px;}
             <span>Plus</span>
          </a>
       </li>
-      <li>
-      <a>
-      <i class="fa fa-search"></i>
-         <span>
-         <input type='text' id="search" name='search' placeholder="search" style="background:#383e49" style="color: white">
-         </span>
-      </a>
-      </li>
+
    </ul>
 </nav>
 <main>
    <header></header>
 
+   <style>
+body
+{
+background: url( https://static.pexels.com/photos/316466/pexels-photo-316466.jpeg)
+ no-repeat center center fixed; 
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}</style>
+
    <div>
-      <table class="contact_list">
-      <thead>
-            <tr>
-               ADDRESSBOOK LIST
-            </tr>
-         </thead>
-         <tbody>
+
+       <span>
+      <form class="search-bar" action="/search" method="POST">
+         <input type='text' name='string' class='input_text' placeholder='search'>
+         <a type="submit" class="fa fa-search" style = "color:#153d73; font-size: 20px"></a>
+         </form>
+</span>
+
+
+        <table class="contact_list">
+
+        <thead> </thead>
+
+        <tbody>
           <tr>
-              
+              <th scop="row" style="background: #f5f5f5">&nbsp;&nbsp;<i class="fa fa-heart" style="color:#ff0033"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이름</th>
+              <td style="background:#f5f5f5;font-weight: bold">전화번호</td> </tr>
+
+
               {%- for i in ADDRESSBOOK %}
               <th scope="row">
-              <a href="#" onclick="toggle_object('{{i.name}}'); return false;" class= "fa fa-heart-o" style = "color : #ff0033" id = "favoriticon{{i.name}}" ></a>
+              <a href="/favorite/{{i.id}}">{{i.favorite}}</a>
               <a href = "#{{i.name}}" class="btn-example" onclick="layer_open('{{i.name}}'); return false;" > {{i.name }}</a>
               <div id="{{i.name}}" class="pop-layer" >
                    <div class="pop-container">
@@ -135,14 +140,34 @@ a{margin-left:10px;}
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/{{i.name}}">Delete</a>  
-                                   <a href="/edit" class="btn-layerClose">Edit</a>
+                                   <a href="/delete/{{i.id}}">Delete</a>  
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">Edit</a>
+                                         <div id="{{i.name}}edit" class="pop-layer" >
+                                        <div class="pop-container">
+                                              <div class="pop-conts" >연락처 수정<br><br>
+                                                    <!--content //-->
+                                                 <form class="edit-popup" action="/edit/{{i.id}}" method="POST">
+                                                     <input type="text" name="name" value="{{ i.name }}" style="margin-right: 30px; margin-top: 30px"><br>
+                                                     <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
+                                                     <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
+                                                     <div class="btn-r">
+                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <a class="btn-layerClose">Close</a>
+                                                     </div>
+                                                 </form>>
+
+
+                                                    <!--// content-->
+                                                </div>
+                                            </div>
+                                      </div>
                                    <a href="#" class="btn-layerClose">Close</a>
                                </div>
                                <!--// content-->
                            </div>
                        </div>
                 </div>
+                 
                 
               
               </th>
