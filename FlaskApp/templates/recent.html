@@ -46,6 +46,18 @@ function layer_open(el){
 
 }         
 
+window.onload=function heart(){
+  var obj=document.getElementsByName('favoriticon');
+  for(var i=0;i<obj.length;i++){
+    if(obj[i].title=="♡"){
+      obj[i].className="fa fa-heart-o";
+    }
+    else{
+      obj[i].className="fa fa-heart";
+    }
+  }
+} 
+   
 function toggle_object(el)
 {   
     var obj = document.getElementById('favoriticon'+el);  
@@ -61,6 +73,7 @@ function toggle_object(el)
         obj.className="fa fa-envelope-o";
     }
 }
+
 </script>
 
 <style>
@@ -100,11 +113,10 @@ a{margin-left:10px;}
          </a>
       </li>
       <li>
-         <a href="/new">
+         <a href="/new" onclick="layer_open('add'); return false;">
             <i class="fa fa-plus"></i>
-            <span>Plus</span>
-         </a>
-      </li>
+            <span>Plus</span></a>
+      </li> 
 
    </ul>
 </nav>
@@ -133,10 +145,44 @@ background-size: cover;
 
         <table class="contact_list">
 
-        <thead> </thead>
+        <thead><p style="font-weight: bold; font-size: 17px; margin-left: 30px; margin-top: 20px">최근 기록</p>
+
+         <div id="add" class="pop-layer" >
+                        <div class="pop-container">
+                            <div class="pop-conts" >연락처 추가하기<br><br>
+
+                      <form action='/new'  method='POST'>
+                        <div>
+                          <label for='name'>이름 :</label>
+                          <input type='text' id='name' name='name'><br>
+                       </div>
+                       <div>
+                          <label for="number">전화번호 :</label>
+                          <input type="text" id="number" name="number"><br>
+                          </div>
+                        <div>
+                          <label for="email">E-mail :</label>
+                          <input type="email" id="email" name="email">
+                          </div>
+                          <div class="btn-r">
+                          <input type="submit" style="width:50px" value="추가">  
+                            <a class="btn-layerClose">닫기</a>
+                            </div>
+                            </form>
+
+                  <!--// content-->
+                            </div>
+                        </div>
+                    </div>
+
+
+        </thead>
 
         <tbody>
           <tr>
+
+              <th scop="row" style="background: #f5f5f5">&nbsp;&nbsp;<i class="fa fa-envelope" style="color:#ff0033"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;보낸이</th>
+              <td style="background:#f5f5f5;font-weight: bold">제목</td> </tr>
 
               <th scope="row">
               <a href="#" onclick="toggle_object('mail1'); return false;" class= "fa fa-envelope-o" style = "color : #ff0033" id = "favoriticonmail1" ></a>
@@ -149,8 +195,7 @@ background-size: cover;
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/mail1">Delete</a>  
-                                   <a href="#" class="btn-layerClose">Close</a>
+                                   <a href="#" class="btn-layerClose">닫기</a>
                                </div>
                                <!--// content-->
                            </div>
@@ -170,8 +215,7 @@ background-size: cover;
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/mail2">Delete</a>  
-                                   <a href="#" class="btn-layerClose">Close</a>
+                                   <a href="#" class="btn-layerClose">닫기</a>
                                </div>
                                <!--// content-->
                            </div>
@@ -181,7 +225,7 @@ background-size: cover;
               <td>지우야</td>
           </tr>
              <th scope="row">
-              <a href="#" onclick="toggle_object('mail3'); return false;" class= "fa fa-envelope-open-o" style = "color : #ff0033" id = "favoriticonmail3" ></a>
+              <a href="#" onclick="toggle_object('mail3'); return false;" class= "fa fa-envelope-o" style = "color : #ff0033" id = "favoriticonmail3" ></a>
               <a href = "#mail3" class="btn-example" onclick="layer_open('mail3'); return false;" > 노미나</a>
               <div id="mail3" class="pop-layer" >
                    <div class="pop-container">
@@ -191,8 +235,7 @@ background-size: cover;
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/mail3">Delete</a>  
-                                   <a href="#" class="btn-layerClose">Close</a>
+                                   <a href="#" class="btn-layerClose">닫기</a>
                                </div>
                                <!--// content-->
                            </div>
@@ -202,6 +245,7 @@ background-size: cover;
               <td>공지사항</td>
           </tr>
        </tbody>
+
       </table>
    </div>
 
