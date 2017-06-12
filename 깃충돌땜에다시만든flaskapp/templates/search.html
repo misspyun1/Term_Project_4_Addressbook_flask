@@ -38,7 +38,18 @@ function layer_open(el){
                            // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
-}   
+}
+window.onload=function heart(){
+  var obj=document.getElementsByName('favoriticon');
+  for(var i=0;i<obj.length;i++){
+    if(obj[i].title=="♡"){
+      obj[i].className="fa fa-heart-o";
+    }
+    else{
+      obj[i].className="fa fa-heart";
+    }
+  }
+}    
 </script>
 
 <style>
@@ -79,11 +90,10 @@ a{margin-left:10px;}
          </a>
       </li>
       <li>
-         <a href="/new">
+         <a href="/new" onclick="layer_open('add'); return false;">
             <i class="fa fa-plus"></i>
-            <span>Plus</span>
-         </a>
-      </li>
+            <span>Plus</span></a>
+      </li> 
 
    </ul>
 </nav>
@@ -111,6 +121,32 @@ background-size: cover;
 
         <table class="contact_list">
 
+        <div id="add" class="pop-layer" >
+                        <div class="pop-container">
+                            <div class="pop-conts" >연락처 추가하기<br><br>
+
+                      <form action='/new'  method='POST'>
+                        <div>
+                          <label for='name'>이름 :</label>
+                          <input type='text' id='name' name='name'><br>
+                        </div>
+                        <div>
+                          <label for="number">전화번호 :</label>
+                          <input type="text" id="number" name="number"><br>
+                        </div>
+                        <div>
+                          <label for="email">E-mail :</label>
+                          <input type="email" id="email" name="email">
+                          <input type="submit" value="추가" style="font-weight: bold; color: #ffffff;font-size: 15px; background-color : #336699; border:1px solid #333366; padding :3px">
+                          <a href="#" class="btn-layerClose">닫기</a>
+                        </div>
+                            </form>
+
+                  <!--// content-->
+                            </div>
+                        </div>
+                    </div>
+
         <thead ><p style="font-weight: bold; font-size: 17px; margin-left: 30px; margin-top: 20px">이름으로 찾기</p></thead>
 
         <tbody>
@@ -119,7 +155,7 @@ background-size: cover;
               <td style="background:#f5f5f5;font-weight: bold">전화번호</td> </tr>
               {%- for i in namesearch %}
               <th scope="row">
-              <a href="#" onclick="toggle_object('{{i.name}}'); return false;" class= "fa fa-heart-o" style = "color : #ff0033" id = "favoriticon{{i.name}}" ></a>
+              <a href="/favorite/{{i.id}}"  title = "{{i.favorite}}" class="fa fa-heart-o" style="color :#ff0033" name="favoriticon"> </a>
               <a href = "#{{i.name}}" class="btn-example" onclick="layer_open('{{i.name}}'); return false;" > {{i.name }}</a>
               <div id="{{i.name}}" class="pop-layer" >
                    <div class="pop-container">
@@ -129,8 +165,8 @@ background-size: cover;
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/{{i.name}}">Delete</a>  
-                                   <a href="#{{i.name}}edit" class="btn-layerEdit">Edit</a>
+                                   <a href="/delete/{{i.name}}">삭제하기</a>  
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">수정하기</a>
                                          <div id="{{i.name}}edit" class="pop-layer" >
                                         <div class="pop-container">
                                               <div class="pop-conts" >연락처 수정<br><br>
@@ -141,7 +177,7 @@ background-size: cover;
                                                      <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
                                                      <div class="btn-r">
                                                      <input style="width:50px" type="submit" value="Save">  
-                                                     <a class="btn-layerClose">Close</a>
+                                                     <a class="btn-layerClose">닫기</a>
                                                      </div>
                                                  </form>>
 
@@ -150,7 +186,7 @@ background-size: cover;
                                                 </div>
                                             </div>
                                       </div>
-                                   <a href="#" class="btn-layerClose">Close</a>
+                                   <a href="#" class="btn-layerClose">닫기</a>
                                </div>
                                <!--// content-->
                            </div>
@@ -175,7 +211,7 @@ background-size: cover;
               <td style="background:#f5f5f5;font-weight: bold">전화번호</td> </tr>
               {%- for i in numbersearch %}
               <th scope="row">
-              <a href="#" onclick="toggle_object('{{i.name}}'); return false;" class= "fa fa-heart-o" style = "color : #ff0033" id = "favoriticon{{i.name}}" ></a>
+              <a href="/favorite/{{i.id}}"  title = "{{i.favorite}}" class="fa fa-heart-o" style="color :#ff0033" name="favoriticon"> </a>
               <a href = "#{{i.name}}" class="btn-example" onclick="layer_open('{{i.name}}'); return false;" > {{i.name }}</a>
               <div id="{{i.name}}" class="pop-layer" >
                    <div class="pop-container">
@@ -185,8 +221,8 @@ background-size: cover;
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/{{i.name}}">Delete</a>  
-                                   <a href="#{{i.name}}edit" class="btn-layerEdit">Edit</a>
+                                   <a href="/delete/{{i.name}}">삭제하기</a>  
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">수정하기</a>
                                          <div id="{{i.name}}edit" class="pop-layer" >
                                         <div class="pop-container">
                                               <div class="pop-conts" >연락처 수정<br><br>
@@ -197,7 +233,7 @@ background-size: cover;
                                                      <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
                                                      <div class="btn-r">
                                                      <input style="width:50px" type="submit" value="Save">  
-                                                     <a class="btn-layerClose">Close</a>
+                                                     <a class="btn-layerClose">닫기</a>
                                                      </div>
                                                  </form>>
 
@@ -206,7 +242,7 @@ background-size: cover;
                                                 </div>
                                             </div>
                                       </div>
-                                   <a href="#" class="btn-layerClose">Close</a>
+                                   <a href="#" class="btn-layerClose">닫기</a>
                                </div>
                                <!--// content-->
                            </div>
