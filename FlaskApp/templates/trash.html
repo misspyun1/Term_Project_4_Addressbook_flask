@@ -147,7 +147,8 @@ background-size: cover;
                           <input type="email" id="email" name="email">
                           </div>
                           <div class="btn-r">
-                          <input type="submit" style="width:50px" value="추가">  
+                          <input type="submit" value="추가" style="display: inline-block; height: 25px; padding: 0 14px 0;
+                              border: 1px solid #304a8a; background-color: #3f5a9d; font-size: 13px; color: #fff; line-height: 25px;">  
                             <a class="btn-layerClose">닫기</a>
                             </div>
                             </form>
@@ -166,7 +167,7 @@ background-size: cover;
 
               {%- for i in trash %}
               <th scope="row">
-                <a href="/favorite/{{i.id}}"  title = "{{i.favorite}}" class="fa fa-heart-o" style="color :#ff0033" name="favoriticon"> </a>
+                <a title = "{{i.favorite}}" class="fa fa-heart-o" style="color :#ff0033" name="favoriticon"> </a>
               <a href = "#{{i.name}}" class="btn-example" onclick="layer_open('{{i.name}}'); return false;" > {{i.name }}</a>
               <div id="{{i.name}}" class="pop-layer" >
                    <div class="pop-container">
@@ -177,7 +178,7 @@ background-size: cover;
 
                                <div class="btn-r">
                                		<a href="/restore/{{i.id}}">복구하기</a>
-                                   <a href="/abdelete/{{i.name}}">휴지통에서 삭제하기</a>  
+                                   <a href="/abdelete/{{i.id}}">휴지통에서 삭제하기</a>  
                                    
                                    <a href="#" class="btn-layerClose">닫기</a>
                                </div>

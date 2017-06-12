@@ -38,6 +38,11 @@ function layer_open(el){
                            // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
+        $el.find('a.btn-layerEdit').click(function(){
+           layer_open(el+'edit');
+                           
+            return false;
+        });//만약 edit버튼을 누르면 edit에 대한 layer가 새로 생기간다.
 }
 window.onload=function heart(){
   var obj=document.getElementsByName('favoriticon');
@@ -139,7 +144,8 @@ background-size: cover;
                           <input type="email" id="email" name="email">
                           </div>
                           <div class="btn-r">
-                          <input type="submit" style="width:50px" value="추가">  
+                          <input type="submit" value="추가" style="display: inline-block; height: 25px; padding: 0 14px 0;
+                              border: 1px solid #304a8a; background-color: #3f5a9d; font-size: 13px; color: #fff; line-height: 25px;">  
                             <a class="btn-layerClose">닫기</a>
                             </div>
                             </form>
@@ -159,16 +165,16 @@ background-size: cover;
               <th scope="row">
               <a href="/favorite/{{i.id}}"  title = "{{i.favorite}}" class="fa fa-heart-o" style="color :#ff0033" name="favoriticon"> </a>
               <a href = "#{{i.name}}" class="btn-example" onclick="layer_open('{{i.name}}'); return false;" > {{i.name }}</a>
-              <div id="{{i.name}}" class="pop-layer" >
+              <div id="{{i.name}}" class="pop-layer" ><!--이름을 누르면 연락처를 자세하게 볼 수 있다-->
                    <div class="pop-container">
                          <div class="pop-conts">연락처 상세보기<br><br>
-                               <!--content //-->
+                     
                             <p class = "ctxt mb20">{{ i.name }}<br>{{ i.number }}<br>{{i.email}}<br>
                               </p>
 
                                <div class="btn-r">
-                                   <a href="/delete/{{i.name}}">삭제하기</a>  
-                                   <a href="#{{i.name}}edit" class="btn-layerEdit">수정하기</a>
+                                   <a href="/delete/{{i.id}}">삭제하기</a>  
+                                   <a href="#{{i.name}}edit" class="btn-layerEdit">수정하기</a><!--버튼 중 수정하기 버튼을 누르면 연락처를 수정하는 팝업이 뜬다.-->
                                          <div id="{{i.name}}edit" class="pop-layer" >
                                         <div class="pop-container">
                                               <div class="pop-conts" >연락처 수정<br><br>
@@ -178,24 +184,19 @@ background-size: cover;
                                                      <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
                                                      <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
                                                      <div class="btn-r">
-                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <input style="width:50px;background-color: #3f5a9d; font-size: 13px; color: #fff; height: 25px" type="submit" value="저장">   
                                                      <a class="btn-layerClose">닫기</a>
                                                      </div>
                                                  </form>>
-
-
-                                                    <!--// content-->
                                                 </div>
                                             </div>
                                       </div>
                                    <a href="#" class="btn-layerClose">닫기</a>
                                </div>
-                               <!--// content-->
+                               
                            </div>
                        </div>
                 </div>
-                
-              
               </th>
               <td>{{ i.number }}</td>
           </tr>
@@ -234,7 +235,7 @@ background-size: cover;
                                                      <input type="text" name="number" value="{{ i.number }}" style="margin-right: 30px"><br>
                                                      <input type="text" name="email" value="{{ i.email }}" style="margin-right:30px"><br>
                                                      <div class="btn-r">
-                                                     <input style="width:50px" type="submit" value="Save">  
+                                                     <input style="width:50px;background-color: #3f5a9d; font-size: 13px; color: #fff; height: 25px" type="submit" value="저장">  
                                                      <a class="btn-layerClose">닫기</a>
                                                      </div>
                                                  </form>>

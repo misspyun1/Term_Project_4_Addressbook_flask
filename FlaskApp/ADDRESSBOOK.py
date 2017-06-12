@@ -27,10 +27,26 @@ class PERSON(db.Model):
       self.favorite="♡"
       self.deleted=False
 
+class RECENT(db.Model):
+   id=db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
+   name=db.Column(db.String(50), nullable=False, default='')
+   title=db.Column(db.String(100), nullable=False, default='')
+   content=db.Column(db.String(100), nullable=False, default='')
+   deleted=db.Column(db.Boolean, default=False)
+
+   #데이터 베이스 생성자
+   def __init__(self, name, title, content):
+      self.name=name
+      self.title=title
+      self.content=content
+      self.read=False
+      self.deleted=False
+
 #메인화면루트
 @app.route("/")
 def main():
-	return render_template('main.html', ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('main.html', ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), 
+		contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 #추가화면 루트
 @app.route("/new", methods=['GET', 'POST'])
@@ -46,24 +62,49 @@ def new():
 	 		db.session.commit()
 	 	return redirect("/")
 
+#메세지 보내기 루트
+@app.route("/sendmail", methods=['GET', 'POST'])
+def send():
+	 if request.method == 'POST':
+	 	#빈칸 입력시 추가되지 않음
+	 	if not request.form['name'] or not request.form['title'] or not request.form['content']:
+	 		flash('Please enter all the fields', 'error')
+	 	else:
+	 		#입력받은 정보를 받아와서 기록에 추가
+	 		NEW=RECENT(request.form['name'],request.form['title'],request.form['content'])
+	 		db.session.add(NEW)
+	 		db.session.commit()
+	 	return redirect("/recent")
+
 #즐겨찾기 화면 루트
 @app.route("/favorite")
 def show_favorite():
-	return render_template('favorite.html',contact_count=PERSON.query.filter_by(deleted=False).count(),FAVORITE=PERSON.query.filter_by(favorite='♥').order_by("name"),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('favorite.html',contact_count=PERSON.query.filter_by(deleted=False).count(),
+		FAVORITE=PERSON.query.filter_by(favorite='♥', deleted=False).order_by("name"),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 #휴지통에서 지우기 루트
-@app.route("/abdelete/<name>")
-def abdelete(name):
+@app.route("/abdelete/<id>")
+def abdelete(id):
 	#데이터 베이스에서 삭제
-	abdeleted=PERSON.query.filter_by(name=name)
+	abdeleted=PERSON.query.filter_by(id=id)
 	abdeleted.delete()
 	db.session.commit()
 	return redirect("/")
 
+#최근기록 지우기 루트
+@app.route("/recent/delete/<id>")
+def redelete(id):
+	#데이터 베이스에서 삭제
+	deleted=RECENT.query.filter_by(id=id)
+	deleted.delete()
+	db.session.commit()
+	return redirect("/recent")
+
 #휴지통 루트
 @app.route("/trash")
 def trash():
-	return render_template('trash.html',contact_count=PERSON.query.filter_by(deleted=False).count(),trash=PERSON.query.filter_by(deleted=True),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('trash.html',contact_count=PERSON.query.filter_by(deleted=False).order_by("name").count(),
+		trash=PERSON.query.filter_by(deleted=True),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 #복구하기 루트
 @app.route("/restore/<id>")
@@ -84,7 +125,7 @@ def delete(id):
 	else :
 		deleted.deleted=True
 	db.session.commit()
-	return redirect("/")
+	return redirect("/trash")
 
 #즐겨찾기 추가 루트
 @app.route("/favorite/<id>")
@@ -104,14 +145,16 @@ def search():
 	#검색 문자열을 받아와 데이터 베이스에서 찾아 넘겨준다
 	string=request.form['string']
 	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string, deleted=False).order_by("name").all(),
-	numbersearch=PERSON.query.filter_by(number=string, deleted=False).order_by("name").all(),contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	numbersearch=PERSON.query.filter_by(number=string, deleted=False).order_by("name").all(),contact_count=PERSON.query.filter_by(deleted=False).count(),
+	rashcount=PERSON.query.filter_by(deleted=True).count())
 
 #즐겨찾기 안에서 검색 루트
 @app.route("/search/favorite", methods=['POST'])
 def search_favorite():
 	string=request.form['string']
-	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string, favorite=True).order_by("name").all(),
-	numbersearch=PERSON.query.filter_by(number=string, favorite=True).order_by("name").all(),contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('search.html', namesearch=PERSON.query.filter_by(name=string, favorite='♥', deleted=False).order_by("name").all(),
+	numbersearch=PERSON.query.filter_by(number=string, favorite='♥', deleted=False).order_by("name").all(),
+	contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
 
 #수정하기 루트
 @app.route("/edit/<id>", methods=['POST'])
@@ -127,8 +170,9 @@ def edit(id):
 #최근기록 루트
 @app.route("/recent")
 def recent():
-	return render_template('recent.html',contact_count=PERSON.query.filter_by(deleted=False).count(),trashcount=PERSON.query.filter_by(deleted=True).count())
+	return render_template('recent.html', RECENT=RECENT.query.filter_by(deleted=False).all(), 
+		ADDRESSBOOK=PERSON.query.filter_by(deleted=False).order_by("name").all(), contact_count=PERSON.query.filter_by(deleted=False).count(),
+		trashcount=PERSON.query.filter_by(deleted=True).count())
 
 if __name__ == "__main__" :
-	db.create_all()
 	app.run(debug=True)
